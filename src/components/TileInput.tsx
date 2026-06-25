@@ -39,18 +39,42 @@ const valueDisplay = (value: TileValue): string => {
 const useLongPress = (onLongPress: () => void, onClick: () => void, ms = 500) => {
   const timerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
   const triggeredRef = useRef(false);
+  const isTouchRef = useRef(false);
+
   const start = useCallback(() => {
     triggeredRef.current = false;
     timerRef.current = setTimeout(() => { triggeredRef.current = true; onLongPress(); }, ms);
   }, [onLongPress, ms]);
+
   const clear = useCallback(() => {
     if (timerRef.current) { clearTimeout(timerRef.current); timerRef.current = null; }
     if (!triggeredRef.current) onClick();
   }, [onClick]);
+
   return {
-    onMouseDown: start, onTouchStart: start, onMouseUp: clear,
+    onTouchStart: (e: React.TouchEvent) => {
+      isTouchRef.current = true;
+      e.preventDefault();
+      start();
+    },
+    onMouseDown: () => {
+      if (isTouchRef.current) return;
+      start();
+    },
+    onTouchEnd: (e: React.TouchEvent) => {
+      e.preventDefault();
+      clear();
+      isTouchRef.current = false;
+    },
+    onTouchCancel: () => {
+      if (timerRef.current) { clearTimeout(timerRef.current); timerRef.current = null; }
+      isTouchRef.current = false;
+    },
+    onMouseUp: () => {
+      if (isTouchRef.current) return;
+      clear();
+    },
     onMouseLeave: () => { if (timerRef.current) { clearTimeout(timerRef.current); timerRef.current = null; } },
-    onTouchEnd: clear,
   };
 };
 
