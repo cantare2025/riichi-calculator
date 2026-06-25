@@ -84,7 +84,8 @@ const TileCard = ({
   suit: TileSuit; value: TileValue; isWinning?: boolean; small?: boolean;
   onClick?: () => void; onLongPress?: () => void; onDelete?: () => void; showDelete?: boolean;
 }) => {
-  const handlers = useLongPress(() => onLongPress?.(), () => onClick?.());
+  const hasHandlers = !!(onClick || onLongPress);
+  const handlers = hasHandlers ? useLongPress(() => onLongPress?.(), () => onClick?.()) : null;
   const cls = small ? 'w-8 h-12' : 'w-10 h-14';
   const imgPath = getTileImagePath(suit, value);
   return (
