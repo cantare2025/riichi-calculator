@@ -4,7 +4,7 @@ import { Rules } from "@/pages/Rules";
 
 export default function App() {
   return (
-    <Router>
+    <Router basename="/riichi-calculator">
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/rules" element={<Rules />} />
