@@ -1,3 +1,4 @@
+小孩子不懂事做着玩的，一个日麻点数计算器。
 # React + TypeScript + Vite
 
 This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
