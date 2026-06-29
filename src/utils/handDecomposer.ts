@@ -278,8 +278,8 @@ export const detectWaitType = (
         const startValue = parseInt(meld.value);
         const winValue = parseInt(winningTile.value);
         if (winValue === startValue + 1) return 'kanchan'; // 嵌张：中间那张
-        if (winValue === startValue && startValue === 1) return 'penchan'; // 边张：12吃3
-        if (winValue === startValue + 2 && startValue === 7) return 'penchan'; // 边张：89吃7
+        if (winValue === startValue && startValue === 7) return 'penchan'; // 边张：89等7
+        if (winValue === startValue + 2 && startValue === 1) return 'penchan'; // 边张：12等3
         return 'ryanmen'; // 两面
       }
     }
